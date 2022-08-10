@@ -1,5 +1,5 @@
 import React from "react";
-export default function Button({ filled, ...props }) {
+export default function Button({ filled, children, ...props }) {
   const bg = filled ? "bg-xmint" : "";
   const text = filled ? "text-xdark" : "text-xmint";
   const hover = filled
@@ -8,9 +8,10 @@ export default function Button({ filled, ...props }) {
 
   return (
     <div
-      className={`m-2 min-w-[100px] text-center font-bold p-[3px] border-2 border-xmint transition-ease duration-75 ${bg} ${text} ${hover}`}
+      className={`cursor-pointer m-2 min-w-[100px] text-center font-bold p-[3px] border-2 border-xmint transition-ease duration-75 ${bg} ${text} ${hover}`}
+      {...props}
     >
-      {props.children}
+      {children}
     </div>
   );
 }

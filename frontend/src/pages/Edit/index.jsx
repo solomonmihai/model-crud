@@ -6,11 +6,13 @@ function Box(props) {
   const mesh = useRef(null);
   const [hovered, setHover] = useState(false);
   const [active, setActive] = useState(false);
+
   useFrame((state, delta) => {
     mesh.current.rotation.x += 0.01;
     mesh.current.rotation.y -= 0.01;
     mesh.current.rotation.z += 0.01;
   });
+
   return (
     <mesh
       {...props}

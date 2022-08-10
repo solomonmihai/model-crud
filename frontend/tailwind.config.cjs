@@ -12,6 +12,15 @@ module.exports = {
       fontFamily: {
         roboto: "Roboto",
       },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0%" },
+          "100%": { opacity: "100%" },
+        },
+      },
+      animation: {
+        fadeIn: "fadeIn 0.3s ease",
+      },
     },
   },
   plugins: [],
