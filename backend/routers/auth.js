@@ -7,15 +7,16 @@ const router = require("express").Router();
 router.post("/register", async (req, res) => {
   // TODO: validate
   const { username, email, password } = req.body;
+  console.log(req.body);
 
   const usernameTaken = await User.findOne({ username });
   const emailTaken = await User.findOne({ email });
 
   if (usernameTaken) {
-    return res.json({ message: "Username already used" }).status(400);
+    return res.status(400).json({ message: "username already used" });
   }
   if (emailTaken) {
-    return res.json({ message: "Email already used" }).status(400);
+    return res.status(400).json({ message: "email already used" });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -35,12 +36,12 @@ router.post("/login", (req, res) => {
 
   User.findOne({ username }).then((user) => {
     if (!user) {
-      return res.json({ message: "username not found" }).status(400);
+      return res.status(400).json({ message: "username not found" });
     }
 
     bcrypt.compare(password, user.password).then((match) => {
       if (!match) {
-        return res.json({ message: "incorrect password" }).status(400);
+        return res.status(400).json({ message: "incorrect password" });
       }
 
       const payload = {
@@ -53,7 +54,7 @@ router.post("/login", (req, res) => {
         { expiresIn: 86400 },
         (err, token) => {
           if (err) {
-            return res.json({ message: err }).status(400);
+            return res.status(400).json({ message: err });
           }
           return res.json({
             message: "success",
@@ -69,13 +70,13 @@ function verifyJWT(req, res, next) {
   const token = req.headers["x-access-token"]?.split(" ")[1];
 
   if (!token) {
-    return res.json({ message: "incorrect token", isLoggedIn: false });
+    return res.json({ message: "invalid token", isAuth: false });
   }
 
-  jwt.verify(token, process.env.PASSPORT_SECRET, (err, decoded) => {
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       return res.json({
-        isLoggedIn: false,
+        isAuth: false,
         message: "failed to authenticate",
       });
     }
@@ -86,8 +87,8 @@ function verifyJWT(req, res, next) {
   });
 }
 
-router.get("/user", verifyJWT, (req, res) => {
-  res.json({ isLoggedIn: true, username: req.user.username });
+router.get("/isAuthenticated", verifyJWT, (req, res) => {
+  res.json({ isAuth: true, username: req.user.username });
 });
 
 module.exports = router;
