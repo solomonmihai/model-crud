@@ -1,10 +1,12 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
 import AuthStore from "../stores/auth";
 import Button from "./Button";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { isAuth, username } = AuthStore.useState((s) => s);
 
   function logOut() {
@@ -13,6 +15,10 @@ export default function Navbar() {
       s.isAuth = false;
     });
     navigate("/");
+  }
+
+  if (location.pathname === "/edit") {
+    return null;
   }
 
   return (

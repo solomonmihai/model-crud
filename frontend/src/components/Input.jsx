@@ -10,7 +10,7 @@ export default function Input({ label, ...props }) {
         </label>
       )}
       <input
-        className="outline-none border-2 border-xmint p-2 m-2 bg-xgray text-xwhite"
+        className="outline-none border-2 border-xmint p-[3px] m-2 bg-xgray text-xwhite"
         {...props}
       />
     </>

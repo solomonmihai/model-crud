@@ -50,7 +50,7 @@ export default function Landing() {
         <Box position={[0, 0, 0]} scale={1.6} />
         <Box position={[0, -2, 0]} scale={0.7} />
         <Box position={[0, -3, 0]} scale={0.2} />
-      </Canvas>
+    </Canvas>
       <div>
         <p className="fixed w-screen bottom-0 text-center">
           by{" "}

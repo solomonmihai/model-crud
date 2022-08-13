@@ -1,14 +1,27 @@
 import React from "react";
-export default function Button({ filled, children, ...props }) {
-  const bg = filled ? "bg-xmint" : "";
-  const text = filled ? "text-xdark" : "text-xmint";
-  const hover = filled
-    ? "hover:bg-xdark hover:text-xmint"
-    : "hover:bg-xmint hover:text-xdark";
+import classnames from "classnames";
 
+export default function Button({ filled, danger, children, ...props }) {
+  const main =
+    "cursor-pointer m-2 min-w-[100px] text-center font-bold p-[3px] border-2 transition-ease duration-75";
+
+  // TODO: remake this shit
   return (
     <div
-      className={`cursor-pointer m-2 min-w-[100px] text-center font-bold p-[3px] border-2 border-xmint transition-ease duration-75 ${bg} ${text} ${hover}`}
+      className={classnames(main, {
+        "bg-red-400": filled && danger,
+        "bg-xmint": filled && !danger,
+        "border-xmint": !danger,
+        "border-red-400": danger,
+        "text-xdark": filled && !danger,
+        "text-xmint": !filled && !danger,
+        "text-xdark": filled && danger,
+        "text-red-400": !filled && danger,
+        "hover:bg-xdark hover:text-xmint": filled && !danger,
+        "hover:bg-xdark hover:text-red-400": filled && danger,
+        "hover:bg-xmint hover:text-xdark": !filled && !danger,
+        "hover:bg-red-400 hover:text-xdark": !filled && danger,
+      })}
       {...props}
     >
       {children}
