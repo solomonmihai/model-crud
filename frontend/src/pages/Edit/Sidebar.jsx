@@ -23,7 +23,7 @@ export default function Sidebar() {
     }
 
     setObj(newObj);
-  }, [selectedId]);
+  }, [selectedId, objects]);
 
   useEffect(() => {
     EditStore.update((s) => {
@@ -36,6 +36,14 @@ export default function Sidebar() {
     });
   }, [obj]);
 
+  function changeProperty(property, value) {
+    setObj((old) => {
+      const newObj = { ...old };
+      newObj[property] = value;
+      return newObj;
+    });
+  }
+
   return (
     <div className="flex flex-col space-y-2 overflow-scroll p-2 min-w-[240px] text-sm">
       {!obj ? (
@@ -46,33 +54,22 @@ export default function Sidebar() {
             label="position"
             vector={obj.position}
             onChange={(val) => {
-              setObj((old) => {
-                const newObj = { ...old };
-                newObj.position = val;
-                return newObj;
-              });
+              changeProperty("position", val);
             }}
           />
           <VectorInput
             label="scale"
             vector={obj.scale}
             onChange={(val) => {
-              setObj((old) => {
-                const newObj = { ...old };
-                newObj.scale = val;
-                return newObj;
-              });
+              changeProperty("scale", val);
             }}
           />
           <VectorInput
             label="rotation"
             vector={obj.rotation.map((x) => x * TO_DEGREES)}
             onChange={(val) => {
-              setObj((old) => {
-                const newObj = { ...old };
-                newObj.rotation = val.map((x) => x * TO_RADIANS);
-                return newObj;
-              });
+              const rotation = val.map((x) => x * TO_RADIANS);
+              changeProperty("rotation", rotation);
             }}
           />
           <div className="grid grid-cols-3">
@@ -83,11 +80,7 @@ export default function Sidebar() {
                 type="color"
                 value={obj.color}
                 onChange={(evt) => {
-                  setObj((old) => {
-                    const newObj = { ...old };
-                    newObj.color = evt.target.value;
-                    return newObj;
-                  });
+                  changeProperty("color", evt.target.value);
                 }}
               />
             </div>

@@ -10,7 +10,7 @@ export default function VectorInput({ label, vector, onChange }) {
     <div className="grid grid-cols-3">
       <div className="col-span-1">{label}:</div>
       <div className="col-span-2 flex space-x-1">
-        <NumInput
+       <NumInput
           value={vector[0]}
           onChange={(evt) => {
             if (evt.target === "") {

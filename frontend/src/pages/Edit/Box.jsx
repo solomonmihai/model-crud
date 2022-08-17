@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useEffect } from "react";
+
 import EditStore from "../../stores/edit";
 
 export default function Box({ obj }) {
@@ -8,6 +9,7 @@ export default function Box({ obj }) {
 
   return (
     <mesh
+      name={uuid}
       {...obj}
       ref={mesh}
       onClick={() => {

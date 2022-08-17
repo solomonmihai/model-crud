@@ -8,7 +8,6 @@ export default function Toolbar() {
   const name = EditStore.useState((s) => s.model.name);
 
   function addCube() {
-    // TODO: gen uuid for every object
     const cube = {
       uuid: uuid(),
       position: [0, 0, 0],

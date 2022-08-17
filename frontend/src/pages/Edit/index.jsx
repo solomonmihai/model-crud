@@ -1,11 +1,12 @@
-import React, { useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import React from "react";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
 
-import Controls from "./Controls";
 import Sidebar from "./Sidebar";
 import Toolbar from "./Toolbar";
 import EditStore from "../../stores/edit";
 import Box from "./Box";
+import TransformControl from "./TransformControl";
 
 export default function Edit() {
   const onCreated = (state) => {
@@ -14,7 +15,13 @@ export default function Edit() {
 
   const model = EditStore.useState((s) => s.model);
 
+  // TODO: delete object
+  // TODO: change background color
+  // TODO: object list
+  //  * parent children relationship???
+  // TODO: default camera position
   // TODO: make scene bigger
+  // TODO: multi select (modify properties for all objects)
 
   return (
     <div>
@@ -26,10 +33,11 @@ export default function Edit() {
             <ambientLight />
             <pointLight position={[0, 10, 10]} />
             <gridHelper />
-            <Controls />
-            {model.objects.map((obj, index) => (
-              <Box key={index} obj={obj} />
-            ))}
+            <OrbitControls makeDefault enableDamping={false} />
+            {model.objects.map((obj, index) => {
+              return <Box key={index} obj={obj} />;
+            })}
+            <TransformControl />
           </Canvas>
         </div>
       </div>
