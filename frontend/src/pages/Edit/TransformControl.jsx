@@ -34,6 +34,7 @@ export default function TransformControl() {
 
   useEffect(() => {
     if (transform.current) {
+      const controls = transform.current;
       const callback = (evt) => {
         if (evt.value == false) {
           EditStore.update((s) => {
@@ -50,18 +51,20 @@ export default function TransformControl() {
         }
       };
 
-      transform.current.addEventListener("dragging-changed", callback);
+      controls.addEventListener("dragging-changed", callback);
 
       return () => {
-        transform.current.removeEventListener("dragging-changed", callback);
+        controls.removeEventListener("dragging-changed", callback);
       };
     }
   });
 
   useEffect(() => {
     if (selected) {
-      const o = scene.getObjectByName(selected);
+      const o = scene.getObjectByProperty("uuid", selected);
       setObj(o);
+    } else {
+      setObj(null);
     }
   }, [selected]);
 

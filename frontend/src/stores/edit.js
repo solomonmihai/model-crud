@@ -6,6 +6,7 @@ const EditStore = new Store({
     objects: [],
   },
   selected: null,
+  showGrid: true,
 });
 
 export default EditStore;

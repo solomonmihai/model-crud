@@ -6,10 +6,14 @@ import EditStore from "../../stores/edit";
 
 export default function Toolbar() {
   const name = EditStore.useState((s) => s.model.name);
+  const showGrid = EditStore.useState((s) => s.showGrid);
 
+  // TODO: prevent 2 objects having same name
+  //   * add cube (1) cube (2) etc ...
   function addCube() {
     const cube = {
       uuid: uuid(),
+      name: "cube",
       position: [0, 0, 0],
       scale: [1, 1, 1],
       rotation: [0, 0, 0],
@@ -34,8 +38,17 @@ export default function Toolbar() {
         }}
       />
       <Button onClick={addCube}>add cube</Button>
-      <Button>disable grid</Button>
+      <Button
+        onClick={() => {
+          EditStore.update((s) => {
+            s.showGrid = !s.showGrid;
+          });
+        }}
+      >
+        {showGrid ? "disable" : "enable"} grid
+      </Button>
       <Button>reset camera</Button>
+      <Button>bg color</Button>
       <div className="flex flex-grow" />
       <Button>save</Button>
       <Button danger>exit</Button>

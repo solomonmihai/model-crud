@@ -62,10 +62,7 @@ function App() {
             }
           />
         </Route>
-        <Route
-          path="*"
-          element={<div className="w-full text-center">path not found</div>}
-        />
+        <Route path="*" element={<div className="w-full text-center">path not found</div>} />
       </Routes>
     </BrowserRouter>
   );

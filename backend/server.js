@@ -5,7 +5,8 @@ const cors = require("cors");
 
 require("dotenv").config();
 
-const auth = require("./routers/auth");
+const { auth } = require("./routers/auth");
+const modelsRouter = require("./routers/models");
 
 const app = express();
 
@@ -15,6 +16,7 @@ const urlEncoderParser = bodyParser.urlencoded({ extended: false });
 app.use(bodyParser.json(), urlEncoderParser);
 
 app.use("/auth", auth);
+app.use("/models", modelsRouter);
 
 const dbURI = process.env.DB_URL;
 

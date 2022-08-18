@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Button from "../../components/Button";
 import EditStore from "../../stores/edit";
 import VectorInput from "./VectorInput";
 
@@ -85,8 +86,38 @@ export default function Sidebar() {
               />
             </div>
           </div>
+          <div>
+            <Button
+              danger
+              style={{ margin: "0px" }}
+              onClick={() => {
+                EditStore.update((s) => {
+                  s.model.objects = s.model.objects.filter((o) => o.uuid != selectedId);
+                  s.selected = null;
+                });
+              }}
+            >
+              delete
+            </Button>
+          </div>
         </>
       )}
+      <div className="border-xmint border-[1px] w-full" />
+      <div className="flex flex-col space-y-2">
+        {objects.map((obj, index) => (
+          <div
+            key={index}
+            className={`${obj.uuid === selectedId && "text-xmint"} cursor-pointer hover:text-xmint`}
+            onClick={() => {
+              EditStore.update((s) => {
+                s.selected = obj.uuid;
+              });
+            }}
+          >
+            {obj.name}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

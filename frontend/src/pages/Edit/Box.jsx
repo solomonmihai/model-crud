@@ -9,7 +9,7 @@ export default function Box({ obj }) {
 
   return (
     <mesh
-      name={uuid}
+      uuid={uuid}
       {...obj}
       ref={mesh}
       onClick={() => {

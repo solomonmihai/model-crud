@@ -48,20 +48,15 @@ router.post("/login", (req, res) => {
         id: user._id,
         username: user.username,
       };
-      jwt.sign(
-        payload,
-        process.env.JWT_SECRET,
-        { expiresIn: 86400 },
-        (err, token) => {
-          if (err) {
-            return res.status(400).json({ message: err });
-          }
-          return res.json({
-            message: "success",
-            token: "Bearer " + token,
-          });
+      jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 86400 }, (err, token) => {
+        if (err) {
+          return res.status(400).json({ message: err });
         }
-      );
+        return res.json({
+          message: "success",
+          token: "Bearer " + token,
+        });
+      });
     });
   });
 });
@@ -91,4 +86,8 @@ router.get("/isAuthenticated", verifyJWT, (req, res) => {
   res.json({ isAuth: true, username: req.user.username });
 });
 
-module.exports = router;
+module.exports = {
+  auth: router,
+  verifyJWT,
+};
+
