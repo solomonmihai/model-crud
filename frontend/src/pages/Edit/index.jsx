@@ -28,6 +28,8 @@ export default function Edit() {
   // TODO: resize sidebar
   // TODO: add multiple types of objects
   // TODO: prewview mode with skybox
+  // TODO: deselect
+  // TODO: undo / redo
 
   return (
     <div className="fixed top-0 left-0 w-screen h-screen">

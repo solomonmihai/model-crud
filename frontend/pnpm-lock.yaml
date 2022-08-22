@@ -9,6 +9,7 @@ specifiers:
   autoprefixer: ^10.4.8
   axios: ^0.27.2
   classnames: ^2.3.1
+  dayjs: ^1.11.5
   postcss: ^8.4.16
   pullstate: ^1.24.0
   react: ^18.2.0
@@ -24,6 +25,7 @@ dependencies:
   '@react-three/fiber': 8.3.0_f72olm6mn3unzgg4exeiaoxanm
   axios: 0.27.2
   classnames: 2.3.1
+  dayjs: 1.11.5
   pullstate: 1.24.0_react@18.2.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -770,6 +772,10 @@ packages:
 
   /csstype/3.1.0:
     resolution: {integrity: sha512-uX1KG+x9h5hIJsaKR9xHUeUraxf8IODOwq9JLNPq6BwB04a/xgpq3rcx47l5BZu5zBPlgD342tdke3Hom/nJRA==}
+
+  /dayjs/1.11.5:
+    resolution: {integrity: sha512-CAdX5Q3YW3Gclyo5Vpqkgpj8fSdLQcRuzfX6mC6Phy0nfJ0eGYOeS7m4mt2plDWLAtA4TqTakvbboHvUxfe4iA==}
+    dev: false
 
   /debounce/1.2.1:
     resolution: {integrity: sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==}

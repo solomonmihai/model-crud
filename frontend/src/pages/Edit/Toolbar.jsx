@@ -1,3 +1,4 @@
+import axios from "axios";
 import { v4 as uuid } from "uuid";
 
 import Button from "../../components/Button";
@@ -7,6 +8,7 @@ import EditStore from "../../stores/edit";
 export default function Toolbar() {
   const name = EditStore.useState((s) => s.model.name);
   const showGrid = EditStore.useState((s) => s.showGrid);
+  const model = EditStore.useState((s) => s.model);
 
   // TODO: prevent 2 objects having same name
   //   * add cube (1) cube (2) etc ...
@@ -23,6 +25,25 @@ export default function Toolbar() {
     EditStore.update((s) => {
       s.model.objects = [...s.model.objects, cube];
     });
+  }
+
+  function saveModel() {
+    axios
+      .post(
+        "http://localhost:8888/models/save",
+        {
+          data: model,
+          id: null,
+        },
+        {
+          headers: {
+            "x-access-token": localStorage.getItem("token"),
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      });
   }
 
   return (
@@ -50,7 +71,7 @@ export default function Toolbar() {
       <Button>reset camera</Button>
       <Button>bg color</Button>
       <div className="flex flex-grow" />
-      <Button>save</Button>
+      <Button onClick={saveModel}>save</Button>
       <Button danger>exit</Button>
     </div>
   );
