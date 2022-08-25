@@ -22,7 +22,7 @@ export default function Navbar() {
   }
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center bg-xgray mb-2">
       <p className="text-center text-xmint font-bold ml-4">
         {isAuth ? (
           `logged in as ${username}`

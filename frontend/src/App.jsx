@@ -9,7 +9,7 @@ import Register from "./pages/Register";
 import Edit from "./pages/Edit";
 import Dashboard from "./pages/Dashboard";
 import AuthStore from "./stores/auth";
-import { checkAuth } from "./helper";
+import { checkAuth, setAuthToken } from "./helper";
 import Landing from "./pages/Landing";
 
 function App() {
@@ -23,6 +23,9 @@ function App() {
           s.isAuth = isAuth;
           s.username = username;
         });
+
+        setAuthToken(token);
+
         // window.location.href = "/dashboard";
       }
     });

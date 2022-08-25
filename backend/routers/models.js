@@ -2,10 +2,10 @@ const { verifyJWT } = require("./auth");
 const router = require("express").Router();
 const Model = require("../models/model");
 
-router.get("/", verifyJWT, (req, res) => {
+router.get("/", verifyJWT, async (req, res) => {
   const { id } = req.query;
 
-  const model = Model.findById(id);
+  const model = await Model.findById(id);
 
   if (!model) {
     return res.json({ status: "invalid id" });
@@ -15,7 +15,7 @@ router.get("/", verifyJWT, (req, res) => {
 });
 
 router.get("/all", verifyJWT, async (req, res) => {
-  const models = await Model.find({ user: req.user.id });
+  const models = await Model.find({ user: req.user.id }).sort({ updatedAt: -1 });
   return res.json({ models });
 });
 
@@ -36,13 +36,13 @@ router.post("/save", verifyJWT, async (req, res) => {
 
   try {
     // TODO: check if this works
-    exists.update({ data, lastUpdated: Date.now() });
+    await Model.updateOne({ _id: id }, { data, lastUpdated: Date.now() });
   } catch (err) {
     console.log("error saving model", err);
   }
 });
 
-router.get("/delete", verifyJWT, (req, res) => {
+router.get("/delete", verifyJWT, async (req, res) => {
   const { id } = req.query;
 
   const model = Model.findById(id);
@@ -52,7 +52,7 @@ router.get("/delete", verifyJWT, (req, res) => {
   }
 
   // TODO: check if this works
-  Model.deleteOne({ _id: id });
+  await Model.deleteOne({ _id: id });
 
   return res.json({ status: "success" });
 });

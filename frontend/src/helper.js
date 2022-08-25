@@ -13,3 +13,19 @@ export async function checkAuth(token) {
       return res.data;
     });
 }
+
+export async function setAuthToken(token) {
+  axios.defaults.headers.common["x-access-token"] = "";
+  delete axios.defaults.headers.common["x-access-token"];
+
+  if (token) {
+    axios.defaults.headers.common["x-access-token"] = token;
+  }
+}
+
+export function getNewModel() {
+  return {
+    name: "new model",
+    objects: [],
+  };
+}

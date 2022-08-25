@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 
 import Button from "../../components/Button";
@@ -6,9 +7,12 @@ import Input from "../../components/Input";
 import EditStore from "../../stores/edit";
 
 export default function Toolbar() {
+  const navigate = useNavigate();
+
   const name = EditStore.useState((s) => s.model.name);
   const showGrid = EditStore.useState((s) => s.showGrid);
   const model = EditStore.useState((s) => s.model);
+  const id = EditStore.useState((s) => s.id);
 
   // TODO: prevent 2 objects having same name
   //   * add cube (1) cube (2) etc ...
@@ -29,18 +33,10 @@ export default function Toolbar() {
 
   function saveModel() {
     axios
-      .post(
-        "http://localhost:8888/models/save",
-        {
-          data: model,
-          id: null,
-        },
-        {
-          headers: {
-            "x-access-token": localStorage.getItem("token"),
-          },
-        }
-      )
+      .post("http://localhost:8888/models/save", {
+        data: model,
+        id: id,
+      })
       .then((res) => {
         console.log(res);
       });
@@ -72,7 +68,9 @@ export default function Toolbar() {
       <Button>bg color</Button>
       <div className="flex flex-grow" />
       <Button onClick={saveModel}>save</Button>
-      <Button danger>exit</Button>
+      <Button danger onClick={() => navigate("/dashboard")}>
+        exit
+      </Button>
     </div>
   );
 }

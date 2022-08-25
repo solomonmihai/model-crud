@@ -1,54 +1,40 @@
-import React from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useSearchParams } from "react-router-dom";
 
-import Sidebar from "./Sidebar";
-import Toolbar from "./Toolbar";
 import EditStore from "../../stores/edit";
-import Box from "./Box";
-import TransformControl from "./TransformControl";
+import EditView from "./EditView";
 
 export default function Edit() {
-  const onCreated = (state) => {
-    state.gl.setClearColor("black");
-  };
+  const [params] = useSearchParams();
+  const id = params.get("id");
 
-  const model = EditStore.useState((s) => s.model);
-  const showGrid = EditStore.useState((s) => s.showGrid);
+  const [loading, setLoading] = useState(true);
 
-  // TODO: change background color
-  // TODO: object list
-  //  * parent children relationship???
-  // TODO: default camera position
-  // TODO: make scene bigger
-  // TODO: multi select (modify properties for all objects)
-  // TODO: add 3d lines in center of scene
-  // TODO: sync scene editor settings with localstorage
-  // TODO: lighting settings
-  // TODO: resize sidebar
-  // TODO: add multiple types of objects
-  // TODO: prewview mode with skybox
-  // TODO: deselect
-  // TODO: undo / redo
+  useEffect(() => {
+    setLoading(true);
+    if (!id) {
+      setLoading(false);
+      return;
+    }
+    axios
+      .get(`http://localhost:8888/models?id=${id}`)
+      .then((res) => {
+        EditStore.update((s) => {
+          s.model = res.data.data;
+          s.id = res.data._id;
+        });
+        setLoading(false);
+        console.log("fetching model");
+      })
+      .catch((err) => {
+        console.log("error fetching model", err);
+      });
+  }, []);
 
-  return (
-    <div className="fixed top-0 left-0 w-screen h-screen">
-      <Toolbar />
-      <div className="w-full h-full flex flex-row">
-        <Sidebar />
-        <div className="w-full h-full">
-          <Canvas onCreated={onCreated}>
-            <ambientLight />
-            <pointLight position={[0, 10, 10]} />
-            {showGrid && <gridHelper />}
-            <OrbitControls makeDefault enableDamping={false} />
-            {model.objects.map((obj, index) => {
-              return <Box key={index} obj={obj} />;
-            })}
-            <TransformControl />
-          </Canvas>
-        </div>
-      </div>
-    </div>
-  );
+  if (loading) {
+    return <div className="fixed top-0 left-0 w-screen h-screen text-center">loading...</div>;
+  }
+
+  return <EditView />;
 }

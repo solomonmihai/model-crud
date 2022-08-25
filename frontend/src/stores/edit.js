@@ -1,10 +1,9 @@
 import { Store } from "pullstate";
+import { getNewModel } from "../helper";
 
 const EditStore = new Store({
-  model: {
-    name: "new model",
-    objects: [],
-  },
+  model: getNewModel(),
+  id: null,
   selected: null,
   showGrid: true,
 });
